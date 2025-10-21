@@ -90,11 +90,79 @@
 
 > **提示**：添加新模板时保持命名一致性（动词-名词），并在 Front Matter 的 `description` 里使用一句话中文概括，方便快速检索。
 
+### 完整模板清单
+
+| 模板文件 | 典型用途 |
+| -------- | -------- |
+| `analyze.md` | 交叉校验规格、计划与任务的一致性 |
+| `api-docs.md` | 汇总或生成接口文档与参数说明 |
+| `check-env.md` | 排查运行环境与依赖配置 |
+| `clarify.md` | 引导澄清不完整或歧义的需求 |
+| `commit-msg.md` | 帮助撰写符合规范的提交信息 |
+| `constitution.md` | 定义或回顾项目的宪章级原则 |
+| `db-schema.md` | 设计领域数据模型与数据库结构 |
+| `debug.md` | 分析定位故障与异常原因 |
+| `deep-reflector.md` | 深度反思任务执行策略与改进点 |
+| `explain.md` | 解释代码、正则表达式等技术细节 |
+| `gen-tests.md` | 生成或完善测试用例 |
+| `github-issue-fixer.md` | 分析 GitHub Issue 并提供解决方案 |
+| `github-pr-reviewer.md` | 审查 Pull Request 并输出评审意见 |
+| `implement.md` | 按 tasks.md 执行实现计划 |
+| `insight-documenter.md` | 记录关键洞察与技术总结 |
+| `instruction-reflector.md` | 对既有指令进行复盘与优化 |
+| `kiro-assistant.md` | 支持 Kiro 产品线的一般性工作流 |
+| `kiro-feature-designer.md` | 规划 Kiro 新特性的需求与设计 |
+| `kiro-spec-creator.md` | 为 Kiro 场景编写规格文档 |
+| `kiro-task-executor.md` | 执行 Kiro 专属任务清单 |
+| `kiro-task-planner.md` | 拆解 Kiro 需求并生成任务计划 |
+| `optimize.md` | 优化查询、算法或系统性能 |
+| `prompt-creator.md` | 辅助设计新的提示词模板 |
+| `refactor.md` | 指导代码重构与结构调整 |
+| `review-code.md` | 进行代码评审与缺陷识别 |
+| `specify.md` | 编写或完善规格说明 |
+| `tasks.md` | 生成分阶段、可执行的任务列表 |
+| `ui-engineer.md` | 聚焦界面实现、交互与样式策略 |
+
 ### 使用建议
 
 - 在 Codex CLI 中调用命令时，优先选择语义最贴近的模板；若存在流程依赖（如先 `/tasks` 后 `/implement`），请严格按模板所述顺序执行。
 - 模板强调“安全边界”：若出现读写限制、需要人工审批等提醒，请在实际操作前与团队确认。
 - 若某些模板需要特定项目结构（如 `.specify/` 目录），请在调用前确认目标仓库已满足前置条件。
+
+### 命令调用示例
+
+- `/explain "这个正则表达式：^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$"`
+- `/explain "为什么这段 Go 代码在并发下产生数据竞态？"`
+- `/debug "Docker 容器启动后立即退出，exit code 137"`
+- `/debug "K8s Pod 健康检查失败，Readiness probe 超时"`
+- `/optimize "SELECT * FROM orders WHERE user_id = ?"`
+- `/optimize "GraphQL 列表查询延迟高，如何分页与缓存？"`
+- `/db-schema "博客平台：文章、评论、标签、分类、用户关注"`
+- `/db-schema "电商：用户、商品、库存、订单、支付、退款"`
+- `/analyze "对 feature-X 的 spec.md/plan.md/tasks.md 做一致性分析"`
+- `/api-docs "订单服务 v1：列出/创建/取消订单接口，返回 JSON Schema"`
+- `/check-env "Node 18 + pnpm + Docker Desktop + Postgres 需要检查哪些项？"`
+- `/clarify "报表导出的‘增量模式’应该如何定义时间窗口？"`
+- `/commit-msg "feat: 支持多租户鉴权与组织切换"`
+- `/constitution "新增隐私数据处理原则：最小化采集、可追溯、可删除"`
+- `/deep-reflector "回顾上周生产事故的根因、缓解与长期改进项"`
+- `/gen-tests "为用户注册接口补充单测：邮箱校验、重复注册、速率限制"`
+- `/github-issue-fixer "#1234 CI 构建偶发失败：超时 60s"`
+- `/github-pr-reviewer "#5678 增加缓存层与指标打点，请给出风险与建议"`
+- `/implement "按 tasks.md 的 Core 阶段开始实现并输出变更清单"`
+- `/insight-documenter "总结搜索性能优化洞察：索引、分页、缓存、N+1"`
+- `/instruction-reflector "审查 /optimize 模板是否与 AGENTS.md 原则一致"`
+- `/kiro-assistant "整理 Kiro 看板的优先级、依赖与风险"`
+- `/kiro-feature-designer "为‘智能模板’设计 MVP 范围与验收标准"`
+- `/kiro-spec-creator "为‘知识库同步’编写规格：触发、冲突合并、安全"`
+- `/kiro-task-executor "执行 Sprint-12 的集成与验收任务"`
+- `/kiro-task-planner "将‘评论系统’拆解为 5 个可并行任务"`
+- `/prompt-creator "生成用于代码评审的团队风格化提示词"`
+- `/refactor "重构 monolith：拆分 auth、billing、report 三个模块"`
+- `/review-code "评审 PR #4321：关注并发安全、可测试性、日志"`
+- `/specify "编写‘导出报表’功能的规格：功能、非功能、边界"`
+- `/tasks "基于 spec.md 与 plan.md 生成任务清单"`
+- `/ui-engineer "设计订单列表的空态、加载态与错误态"`
 
 ## 维护与扩展指南
 
