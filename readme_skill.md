@@ -61,6 +61,75 @@ cd skills/autonomous-skill/scripts/
 ./run-session.sh --task-name my-task --continue --resume-last
 ```
 
+## Claude Skill 使用说明
+
+当你希望“使用 Claude 或 Claude Code 来完成任务”（例如实现功能、代码审查、批量修改），可以使用 `claude-skill`。它基于 Claude Code CLI 的无交互模式执行，默认开启 `acceptEdits`，会自动接受文件编辑权限。
+
+### 1. 环境准备
+
+先确认 Claude Code CLI 已安装：
+
+```bash
+claude --version
+```
+
+如果未安装：
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+### 2. 基础用法（推荐）
+
+直接用 `-p` 传入任务描述，并允许常用工具：
+
+```bash
+claude -p "实现登录功能并补充测试" \
+  --permission-mode acceptEdits \
+  --allowedTools "Read,Write,Edit,Bash"
+```
+
+### 3. 指定可用工具（更安全）
+
+只允许读取和运行特定命令：
+
+```bash
+claude -p "运行测试并分析失败原因" \
+  --permission-mode acceptEdits \
+  --allowedTools "Read,Bash(npm test)"
+```
+
+### 4. 只读分析模式（不改代码）
+
+```bash
+claude -p "分析项目架构并给出优化建议" \
+  --permission-mode plan \
+  --allowedTools "Read"
+```
+
+### 5. 多轮会话（续接）
+
+```bash
+claude --continue \
+  --permission-mode acceptEdits \
+  "继续完成剩余任务并补充测试"
+```
+
+### 6. 输出 JSON 结构（自动化集成）
+
+```bash
+claude -p "输出安全审查报告" \
+  --output-format json \
+  --allowedTools "Read"
+```
+
+### 7. 适用场景建议
+
+- 代码实现：`acceptEdits + Read/Write/Edit/Bash`
+- 代码审查：`plan + Read`
+- 批量修改：`acceptEdits + Read/Write/Edit`
+- 运行测试：`acceptEdits + Read + Bash(npm test)`
+
 ## 目录结构说明
 
 任务数据存储在项目根目录下的 `.autonomous/` 文件夹中：
